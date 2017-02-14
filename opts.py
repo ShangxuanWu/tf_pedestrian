@@ -3,8 +3,8 @@ train_img_list_txt = './file_lists/train_list_2.txt'
 test_img_list_txt = './file_lists/test_list.txt'
 mean = [41,42,40]
 std = [0.26,0.26,0.27]
-#total_image_num = 49880
-total_image_num = 12 # this is for testing
+total_image_num = 49880
+#total_image_num = 12 # this is for testing
 nOutputs = 15 # nJoint + 1
 # 11 joint
 #joint_names = ['segmentation', 'center', 'lower_neck', 'upper_neck', 'head', 'right_foot', 'left_foot', 'left_knee', 'right_knee', 'belly_button', 'left_hand', 'right_hand']

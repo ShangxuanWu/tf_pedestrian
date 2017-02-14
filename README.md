@@ -12,6 +12,7 @@ modify run.sh
 # Useless files
 - test_mp4.py (no longer using a test video)
 - logs/* (no longer using tf.summary)
+- loggers.py (no longer using tf.summary)
 - test_image/* (no longer using several images to test)
 
 # Feb 12th

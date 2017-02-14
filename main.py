@@ -180,13 +180,20 @@ if __name__ == '__main__':
             
             # back-propagation
             train_step.run(feed_dict={x: batch_x, gt: batch_y})
+
+            if j % opt.draw_loss_interval == 0:
+                # save plot for training loss
+                loss_np_array = np.array(loss_record_stack)
+                plt.plot(loss_np_array)
+                plt.savefig(opt.loss_plot_path)
+                print('Loss plotted !')
             
             # you can check particular tensor in pdb: "print(tf.get_default_graph().get_tensor_by_name("stage1/W_2:0").eval())", if checking the feature map, should feed_dict in the eval() 
         
         # testing (forwarding the selected 20 testing images to visualize the result)
         #data_save_obj.reset(i+1)
         cityscape.reset()
-        for j in range(50): # 10 images per batch, 500 validation images in cityscape
+        for j in range(100): # 5 images per batch, 500 validation images in cityscape val set
             print('Testing Batch %d' % (j+1))
             #batch_x, batch_y = data_fetch_obj.get_next_test_batch()
             batch_x, batch_y = cityscape.get_next_test_batch()
@@ -199,11 +206,9 @@ if __name__ == '__main__':
         save_path = saver.save(sess, opt.model_save_path)
         print('Epoch %d model saved !' % (i+1))
 
-        # save plot for training loss
-        loss_np_array = np.array(loss_record_stack)
-        plt.plot(loss_np_array)
-        plt.savefig(opt.loss_plot_path)
-        print('Epoch %d loss plotted !' % (i+1))
+        
+        
+        
 
         # test cityscape for formal accuracy
         cityscape.get_eval_set_result()

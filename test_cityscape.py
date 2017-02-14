@@ -43,12 +43,11 @@ class cityscape_data:
             # get image
             img_fn = self.testImgList[self.nowTestIdx]
             self.nowTestIdx = self.nowTestIdx + 1
-            pdb.set_trace()
             # preprocess image
             img = cv2.imread(img_fn, cv2.IMREAD_COLOR)
             img = helper.preprocess_img_cut_half(img)
 
-            batch_img[2*i-2:2*i-1,:,:,:] = img
+            batch_img[2*i:2*i+2,:,:,:] = img
         
         # batch_img [-1,1], batch_gt [0,1]
         return batch_img, batch_gt
@@ -59,15 +58,16 @@ class cityscape_data:
         for i in range(opt.train_batch_size/2):
             # save forward result, only segmentation, need upsample
             forward_file_name = self.testImgList[now_batch_minus_one * opt.train_batch_size/2 + i].replace('leftImg8bit','results')
-            pdb.set_trace()
             forward_file_dir = os.path.dirname(forward_file_name)
             os.system('mkdir -p '+ forward_file_dir)
-            resized_forward_result_left = np.reshape(forward_results[2*i-2,:,:,0], [opt.input_h, opt.input_w, 1])
-            resized_forward_result_right = np.reshape(forward_results[2*i-1,:,:,0], [opt.input_h, opt.input_w, 1])
+            # clip left and right images into one image
+            resized_forward_result_left = np.reshape(forward_results[2*i,:,:,0], [opt.input_h, opt.input_w])
+            resized_forward_result_right = np.reshape(forward_results[2*i+1,:,:,0], [opt.input_h, opt.input_w])
             resized_forward_result = np.zeros([opt.input_h,opt.input_w*2,1])
-            resized_forward_result[:,0:opt.input_w-1,0] = resized_forward_result_left
-            resized_forward_result[:,opt.input_w:2*opt.input_w-1,0] = resized_forward_result_right
+            resized_forward_result[:,0:opt.input_w,0] = resized_forward_result_left
+            resized_forward_result[:,opt.input_w:2*opt.input_w,0] = resized_forward_result_right
             resized_forward_result = cv2.resize(resized_forward_result, (opt.cityscape_original_width, opt.cityscape_original_height))
+            # threasholding, the label of pedestrian is 24
             mask = resized_forward_result[:,:] > opt.threshold
             mask = mask * 24
             cv2.imwrite(forward_file_name, mask)
