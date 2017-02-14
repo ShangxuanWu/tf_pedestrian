@@ -38,11 +38,12 @@ class cityscape_data:
         batch_img = np.zeros([opt.train_batch_size, opt.input_h, opt.input_w, 3])
         batch_gt = np.zeros([opt.train_batch_size, opt.input_h, opt.input_w, opt.nOutputs])
 
-        # get a half of what you 
+        # fill the blob with images
         for i in range(opt.train_batch_size/2):
             # get image
             img_fn = self.testImgList[self.nowTestIdx]
             self.nowTestIdx = self.nowTestIdx + 1
+            pdb.set_trace()
             # preprocess image
             img = cv2.imread(img_fn, cv2.IMREAD_COLOR)
             img = helper.preprocess_img_cut_half(img)
@@ -58,6 +59,7 @@ class cityscape_data:
         for i in range(opt.train_batch_size/2):
             # save forward result, only segmentation, need upsample
             forward_file_name = self.testImgList[now_batch_minus_one * opt.train_batch_size/2 + i].replace('leftImg8bit','results')
+            pdb.set_trace()
             forward_file_dir = os.path.dirname(forward_file_name)
             os.system('mkdir -p '+ forward_file_dir)
             resized_forward_result_left = np.reshape(forward_results[2*i-2,:,:,0], [opt.input_h, opt.input_w, 1])

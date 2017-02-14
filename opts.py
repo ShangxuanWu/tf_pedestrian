@@ -27,6 +27,7 @@ input_w = 384
 lr = 1e-4
 epoch = 7
 train_batch_size = 10
+draw_loss_interval = 1000
 
 # test parameters
 test_image_batch = 10 # numbers of image to forward and save
