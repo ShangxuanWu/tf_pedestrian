@@ -24,12 +24,12 @@ clear all;
 tic;
 %
 joint_size = 13;
-root_dir = '/mnt/sdc1/shangxuan/dataset/synthetic1';
-dest_dir = '/mnt/sdc1/shangxuan/dataset/synthetic1';
+root_dir = '/mnt/sdc1/shangxuan/dataset/synthetic3';
+dest_dir = '/mnt/sdc1/shangxuan/dataset/synthetic3';
 
     % folders
     image_dir = [root_dir, '/image'];
-    annotation_dir = [root_dir, '/joint_coordinate'];
+    annotation_dir = [root_dir, '/joint coordinate'];
     segmentation_dir = [root_dir, '/depthmap'];
     dest_dir = [root_dir, '/gt'];
 
@@ -101,7 +101,7 @@ dest_dir = '/mnt/sdc1/shangxuan/dataset/synthetic1';
             
             heatmap(:,:,l+1) = this_channel;
         end
-        
+                
         % read segmentation
         seg_full_name = [segmentation_dir, '/', imfiles(j).name];        
         seg = imread(seg_full_name);
