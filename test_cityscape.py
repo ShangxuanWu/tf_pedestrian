@@ -74,8 +74,8 @@ class cityscape_data:
         pass 
 
     # run the given evaluation code
-    def get_eval_set_result(self):
-        os.system('python ./cityscapesScripts-master/cityscapesscripts/evaluation/evalPixelLevelSemanticLabeling.py')
+    def get_eval_set_result(self, epoch_minus_one):
+        os.system('python ./cityscapesScripts-master/cityscapesscripts/evaluation/evalPixelLevelSemanticLabeling.py > logs/epoch' + str(epoch_minus_one+1) + '.txt')
         pass
     
     def reset(self):

@@ -134,7 +134,8 @@ args.evalPixelAccuracy  = False
 args.evalLabels         = []
 args.printRow           = 5
 args.normalized         = True
-args.colorized          = hasattr(sys.stderr, "isatty") and sys.stderr.isatty() and platform.system()=='Linux'
+#args.colorized          = hasattr(sys.stderr, "isatty") and sys.stderr.isatty() and platform.system()=='Linux'
+args.colorized          = False
 args.bold               = colors.BOLD if args.colorized else ""
 args.nocol              = colors.ENDC if args.colorized else ""
 args.JSONOutput         = True

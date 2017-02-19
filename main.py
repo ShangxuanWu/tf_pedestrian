@@ -138,7 +138,7 @@ if __name__ == '__main__':
     
     # new data fetch and save object
     data_fetch_obj = read_data()
-    #data_save_obj = save_result()
+    data_save_obj = save_result()
     cityscape = test_cityscape.cityscape_data()
     
     # start session
@@ -165,7 +165,7 @@ if __name__ == '__main__':
     # start training and testing
     for i in range(opt.epoch):    
         # training
-        data_fetch_obj.reset()
+        '''data_fetch_obj.reset()
         for j in range(int(math.floor(opt.total_image_num / opt.train_batch_size))):
             batch_x, batch_y = data_fetch_obj.get_next_train_batch()
             this_batch_loss = loss.eval(feed_dict={x: batch_x, gt: batch_y})
@@ -189,7 +189,7 @@ if __name__ == '__main__':
                 print('Loss plotted !')
             
             # you can check particular tensor in pdb: "print(tf.get_default_graph().get_tensor_by_name("stage1/W_2:0").eval())", if checking the feature map, should feed_dict in the eval() 
-        
+        '''
         # testing (forwarding the selected 20 testing images to visualize the result)
         #data_save_obj.reset(i+1)
         cityscape.reset()
@@ -211,6 +211,7 @@ if __name__ == '__main__':
         
 
         # test cityscape for formal accuracy
-        cityscape.get_eval_set_result()
+        print('Getting IoU of CityScape!')
+        cityscape.get_eval_set_result(i)
 
     print('Optimize Finished. Training Data Logged.')
