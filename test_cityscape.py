@@ -53,7 +53,7 @@ class cityscape_data:
         return batch_img, batch_gt
 
     # run and save all the eval images
-    def save_forward_result(self, forward_results, now_batch_minus_one):
+    def save_forward_result(self, forward_results, now_batch_minus_one, original_image_batch):
         forward_results = forward_results * 255
         for i in range(opt.train_batch_size/2):
             # save forward result, only segmentation, need upsample
@@ -71,6 +71,17 @@ class cityscape_data:
             mask = resized_forward_result[:,:] > opt.threshold
             mask = mask.astype(float) * 24
             cv2.imwrite(forward_file_name, mask)
+            # write a visualization of three images stitched together
+            stitch_image = np.zeros([opt.cityscape_original_height*3,opt.cityscape_original_width,3])
+            for j in range(3):
+                stitch_image[0:opt.cityscape_original_height, 0:opt.cityscape_original_width,j] = resized_forward_result
+                stitch_image[opt.cityscape_original_height:2*opt.cityscape_original_height, 0:opt.cityscape_original_width, j] = mask
+
+            stitch_image[opt.cityscape_original_height*2:opt.cityscape_original_height*3, 0:opt.cityscape_original_width/2,:] = cv2.resize(np.reshape(original_image_batch[2*j,:,:,:]*128+128,[opt.input_h,opt.input_w,3]), (opt.cityscape_original_width/2, opt.cityscape_original_height))
+
+            stitch_image[opt.cityscape_original_height*2:opt.cityscape_original_height*3, opt.cityscape_original_width/2:opt.cityscape_original_width,:] = cv2.resize(np.reshape(original_image_batch[2*j+1,:,:,:]*128+128,[opt.input_h,opt.input_w,3]), (opt.cityscape_original_width/2, opt.cityscape_original_height))
+
+            cv2.imwrite(forward_file_name + "_stich.png", stitch_image)
         pass 
 
     # run the given evaluation code
