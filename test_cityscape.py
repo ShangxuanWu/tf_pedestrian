@@ -69,7 +69,7 @@ class cityscape_data:
             resized_forward_result = cv2.resize(resized_forward_result, (opt.cityscape_original_width, opt.cityscape_original_height))
             # threasholding, the label of pedestrian is 24
             mask = resized_forward_result[:,:] > opt.threshold
-            mask = mask * 24
+            mask = mask.astype(float) * 24
             cv2.imwrite(forward_file_name, mask)
         pass 
 

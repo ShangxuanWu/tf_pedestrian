@@ -13,6 +13,7 @@ import os
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import timeit
 
 # local import files
 import opts as opt
@@ -51,7 +52,8 @@ class read_data:
             img = cv2.imread(img_fn, cv2.IMREAD_COLOR)
             img = helper.preprocess_img(img)
             # get gt
-            gt_fn = img_fn.replace('image', 'gt')[:-4]+'.mat'
+            #gt_fn = img_fn.replace('image', 'gt')[:-4]+'.mat'
+            gt_fn = img_fn.replace('donghyun', 'shangxuan')[:-4]+'.mat'
             gt = sio.loadmat(gt_fn)['heatmap'] # 288*284*channel
             batch_img[i,:,:,:] = img
             batch_gt[i,:,:,:] = gt
@@ -165,21 +167,27 @@ if __name__ == '__main__':
     # start training and testing
     for i in range(opt.epoch):    
         # training
-        '''data_fetch_obj.reset()
+        data_fetch_obj.reset()
         for j in range(int(math.floor(opt.total_image_num / opt.train_batch_size))):
+            
+            # read
+            start = timeit.default_timer()
             batch_x, batch_y = data_fetch_obj.get_next_train_batch()
+            end = timeit.default_timer()
+            print( "data loading time %f " %(end-start))
+            #
+            start = timeit.default_timer()
             this_batch_loss = loss.eval(feed_dict={x: batch_x, gt: batch_y})
+            
             # logger
             loss_record_stack.append(this_batch_loss)
             # print loss
             print('Epoch %d Batch %d: loss %f' % (i+1, j+1, this_batch_loss))
             
-            # get summary and write log
-            #summary = merged.eval(feed_dict={x: batch_x, gt: batch_y})
-            #train_writer.add_summary(summary, i+1)
-            
             # back-propagation
             train_step.run(feed_dict={x: batch_x, gt: batch_y})
+            end = timeit.default_timer()
+            print( "data forwarding time %f " %(end-start))
 
             if j % opt.draw_loss_interval == 0:
                 # save plot for training loss
@@ -189,13 +197,11 @@ if __name__ == '__main__':
                 print('Loss plotted !')
             
             # you can check particular tensor in pdb: "print(tf.get_default_graph().get_tensor_by_name("stage1/W_2:0").eval())", if checking the feature map, should feed_dict in the eval() 
-        '''
+        
         # testing (forwarding the selected 20 testing images to visualize the result)
-        #data_save_obj.reset(i+1)
         cityscape.reset()
         for j in range(100): # 5 images per batch, 500 validation images in cityscape val set
             print('Testing Batch %d' % (j+1))
-            #batch_x, batch_y = data_fetch_obj.get_next_test_batch()
             batch_x, batch_y = cityscape.get_next_test_batch()
             batch_image_forward_result = final_stage_output_deconved.eval(feed_dict={x: batch_x, gt: batch_y})
 
@@ -206,12 +212,8 @@ if __name__ == '__main__':
         save_path = saver.save(sess, opt.model_save_path)
         print('Epoch %d model saved !' % (i+1))
 
-        
-        
-        
-
         # test cityscape for formal accuracy
-        print('Getting IoU of CityScape!')
         cityscape.get_eval_set_result(i)
+        print('Got IoU of CityScape!')
 
     print('Optimize Finished. Training Data Logged.')

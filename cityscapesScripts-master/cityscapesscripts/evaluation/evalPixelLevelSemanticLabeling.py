@@ -475,9 +475,9 @@ def evaluateImgLists(predictionImgList, groundTruthImgList, args):
         if confMatrix.sum() != nbPixels:
             printError('Number of analyzed pixels and entries in confusion matrix disagree: contMatrix {}, pixels {}'.format(confMatrix.sum(),nbPixels))
 
-        if not args.quiet:
+        '''if not args.quiet:
             print("\rImages Processed: {}".format(i+1), end=' ')
-            sys.stdout.flush()
+            sys.stdout.flush()'''
     if not args.quiet:
         print("\n")
 
