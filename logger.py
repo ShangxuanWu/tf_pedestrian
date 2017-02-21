@@ -1,2 +1,0 @@
-class logger:
-    # not finished

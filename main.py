@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import timeit
 
 # local import files
-import opts as opt
+import opt
 import helper
 import test_cityscape
 import model_3stage
@@ -134,6 +134,10 @@ if __name__ == '__main__':
 
     # set up input and output
     x, gt = model.setup_input()
+
+    # load CPM pretrain
+    if opt.load_original_CPM:
+        model.read_original_model()
     
     # build model
     final_stage_output_deconved, loss, train_step = model.setup_model(x, gt)

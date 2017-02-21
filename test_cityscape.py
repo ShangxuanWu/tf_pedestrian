@@ -12,7 +12,7 @@ import shutil
 import os
 
 # local import files
-import opts as opt
+import opt
 import helper
 
 # labels:

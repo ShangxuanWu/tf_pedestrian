@@ -11,7 +11,7 @@ import math
 import shutil
 import os
 # local import files
-import opts as opt
+import opt
 
 # helper functions
 def read_txt(file_name):

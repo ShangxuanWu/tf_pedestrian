@@ -1,6 +1,6 @@
 # helper functions
 import cv2
-import opts as opt
+import opt
 import pdb
 import numpy as np
 

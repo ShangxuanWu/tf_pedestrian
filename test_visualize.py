@@ -15,7 +15,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 # local import files
-import opts as opt
+import opt
 import helper
 import test_cityscape
 import model_3stage

@@ -13,11 +13,18 @@ modify run.sh
 - Train files loaded in `main.py`, using 50000 synthetic images and 15 channel of ground truth (1 segmentation + 14 joints)
 - Test files loaded in `test_cityscapes.py`, using 500 real images from CityScape validation set.
 
+# What's inside logs?
+- CityScape IoU testing result of every epoch
+
 # Useless files
 - test_mp4.py (no longer using a test video)
-- logs/* (no longer using tf.summary)
-- loggers.py (no longer using tf.summary)
 - test_image/* (no longer using several images to test)
+
+# Feb 21th
+## Add 
+1. load original CPM pretrain parameter
+2. Debugged formal evaluation of CITYSCAPE
+3. Changed the network structure from CPM to Multi-person CPM (see [Here](https://github.com/shihenw/convolutional-pose-machines-release/blob/master/model/_trained_MPI/pose_deploy_resize.prototxt))
 
 # Feb 12th
 ## Add
