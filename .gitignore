@@ -1,4 +1,5 @@
 *.pyc
+original_CPM/CPM-original.npy
 saved_model/*
 ._*
 logs/*
