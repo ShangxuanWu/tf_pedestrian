@@ -28,6 +28,9 @@ modify run.sh
 ## new TFRecord training data link
 scp -r /mnt/sdc1/shangxuan/synthetic3_tf/*
 
+## new Pretrain model download link
+https://github.com/ppwwyyxx/tensorpack/tree/master/examples/ConvolutionalPoseMachines
+
 # Feb 21th
 ## Add 
 1. load original CPM pretrain parameter
