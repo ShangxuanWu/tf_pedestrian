@@ -1,4 +1,4 @@
-*.npy
+original_CPM/*.npy
 *.pyc
 saved_model/*
 ._*
