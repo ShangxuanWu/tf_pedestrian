@@ -20,6 +20,14 @@ modify run.sh
 - test_mp4.py (no longer using a test video)
 - test_image/* (no longer using several images to test)
 
+# Feb 28th
+## Add
+1. Asynchroize data loading (reducing half of the training time, using TFRecord)
+2. All-new CPM model and pretrain (Using some combination of old CPM and new CPM)
+
+## new TFRecord training data link
+scp -r /mnt/sdc1/shangxuan/synthetic3_tf/*
+
 # Feb 21th
 ## Add 
 1. load original CPM pretrain parameter

@@ -110,17 +110,19 @@ dest_dir = '/mnt/sdc1/shangxuan/dataset/synthetic3';
         heatmap(:,:,1) = segmask;
 
         % resize total heatmap
-        heatmap = imresize(heatmap, [288, 384]);
-
+        %heatmap = imresize(heatmap, [368, 368]);
+        heatmap = heatmap(50:417,136:503,:);
+        %keyboard
         % normalize to 0~1
-        for j = 1:jointHeatmapCount + 1
-            max_ = max(max(max(heatmap(:,:,j))));
-            min_ = min(min(min(heatmap(:,:,j))));
-            range_ = max_ - min_;
-            if range_ ~= 0
-                heatmap(:,:,j) = (heatmap(:,:,j) - min_)/range_;
-            end
-        end 
+        %for j = 1:jointHeatmapCount + 1
+        %    max_ = max(max(max(heatmap(:,:,j))));
+        %    min_ = min(min(min(heatmap(:,:,j))));
+        %    range_ = max_ - min_;
+        %    if range_ ~= 0
+        %        heatmap(:,:,j) = (heatmap(:,:,j) - min_)/range_;
+        %    end
+        %end
+        heatmap = double(heatmap > 0); 
     
         save_fn = [dest_dir,'/', pure_name_without_extension,'.mat'];
         save(save_fn, 'heatmap', '-v6');
